@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+    }
+
+    .login-container h2 {
+      color: #333;
+    }
+
+    .login-form {
+      margin-top: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+    }
+
+    .form-group input[type="submit"] {
+      background-color: brown;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .form-group input[type="submit"]:hover {
+      background-color: yellow;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-container">
+    <h2>Login</h2>
+    <form class="login-form" action="#" method="post">
+      {% csrf_token %}
+
+
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+
+
+      <div class="form-group">
+        <label for="e_mail">Email:</label>
+        <input type="email" id="e_mail" name="e_mail" required>
+    </div>
+
+
+    <div class="form-group">
+        <label for="phone_number">Phone_number:</label>
+        <input type="tel" id="phone_number" name="phone_number" required>
+    </div>
+
+
+      <a href="{% url 'home' %}">Go to home ? </a>
+      <div class="form-group">
+        <input type="submit" value="Signup">
+
+      </div>
+      <button type="submit" style="color: red;"><b>signup</b></button>
+    </form>
+  </div>
+
+</body>
+
+</html>
