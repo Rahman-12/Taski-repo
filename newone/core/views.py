@@ -70,7 +70,9 @@ def login(request):
             existing_user = models.Customer.objects.get(username=inputed_username)
             if existing_user:
                 if inputed_password == existing_user.password:
+                    request.session["user_id"] = existing_user.id  # creating a session
                     print("User exists and password is correct")
+
                 else:
                     print("Password is invalid")
             else:
@@ -80,11 +82,14 @@ def login(request):
     return render(request, "login.html")
 
 
+# write ->
 def create_task(request):
     if request.method == "POST":
         inputted_task_name = request.POST["task_name"]
         inputted_task_description = request.POST["task_description"]
         owner_id = request.POST["customer_id"]
+        logged_in_user = request.session["user_id"]  # getting session
+
         try:
             task_owner = models.Customer.objects.get(id=owner_id)
         except Exception as e:
@@ -99,4 +104,17 @@ def create_task(request):
         new_task.save()
         return HttpResponse(f"your task{inputted_task_name}, has been created")
     return render(request, "create_task.html")
+
+
+# redirect,
+def get_user_tasks(request):
+    if request.method == "GET":
+        print(request.session["user_id"])
+        tasks = models.Task.objects.all()
+
+        context = {"tasks": tasks, "name": "collins"}
+
+        for task in tasks:
+            print(task.description)
+        return render(request, "view-tasks.html", context=context)
 
