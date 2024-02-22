@@ -16,14 +16,22 @@ def signup(request):
         inputed_phone_number = request.POST["phone_number"]
         inputed_e_mail = request.POST["e_mail"]
         try:
-            existing_customer = models.Customer.objects.filter(
-                username=inputed_username
-            )
+            existing_customer = models.Customer.objects.filter(username=inputed_username)
+            existing_number = models.Customer.objects.filter(phone_number=inputed_phone_number)
+            existing_password = models.Customer.objects.filter(password=inputed_password)
             if existing_customer:
                 print(f"error : user {inputed_username} already exists.")
                 return HttpResponse(f"username {inputed_username} already exists")
+            elif existing_number:
+                print(f"error : user {inputed_phone_number} already exists.")
+                return HttpResponse(f"Phone number {inputed_phone_number} already exists")
+            elif existing_password:
+                print(f"error : user {inputed_password} already exists.")
+                return HttpResponse(f"Password {inputed_password} already exists")
             else:
                 print("ready to go ?")
+            
+
                 new_customer = models.Customer(
                     username=inputed_username,
                     password=inputed_password,
@@ -34,30 +42,7 @@ def signup(request):
                 return HttpResponse(f"Hello {inputed_username}, welcome to my site.")
         except Exception as e:
             print(f"{str(e)}")
-        try:
-            existing_customer = models.Customer.objects.filter(
-                phone_number=inputed_phone_number
-            )
-            if existing_customer:
-                print(f"error : user {inputed_phone_number} already exists.")
-                return HttpResponse(
-                    f"Phone number, {inputed_phone_number} already exists"
-                )
-            else:
-                print("ready to go ?")
-
-                new_customer = models.Customer(
-                    username=inputed_username,
-                    password=inputed_password,
-                    phone_number=inputed_phone_number,
-                    e_mail=inputed_e_mail,
-                )
-                new_customer.save()
-                return HttpResponse(
-                    f"Hello {inputed_phone_number}, welcome to my site."
-                )
-        except Exception as e:
-            print(f"{str(e)}")
+       
 
     return render(request, "signup.html")
 
