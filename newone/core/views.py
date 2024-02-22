@@ -8,6 +8,9 @@ def home(request):
     return render(request, "home.html")
 
 
+# auuthorization and aithentication
+
+
 # function for the signup page
 def signup(request):
     if request.method == "POST":
@@ -89,7 +92,6 @@ def create_task(request):
         inputted_task_description = request.POST["task_description"]
         owner_id = request.POST["customer_id"]
         logged_in_user = request.session["user_id"]  # getting session
-
         try:
             task_owner = models.Customer.objects.get(id=owner_id)
         except Exception as e:
@@ -106,10 +108,19 @@ def create_task(request):
     return render(request, "create_task.html")
 
 
+"""
+list = [] 
+for element in list : 
+    print(element)
+
+"""
+
+
 # redirect,
 def get_user_tasks(request):
     if request.method == "GET":
         print(request.session["user_id"])
+        current_user_id = request.session["user_id"]
         tasks = models.Task.objects.all()
 
         context = {"tasks": tasks, "name": "collins"}
@@ -117,4 +128,3 @@ def get_user_tasks(request):
         for task in tasks:
             print(task.description)
         return render(request, "view-tasks.html", context=context)
-

@@ -7,6 +7,11 @@
     {% for task in tasks %}
     <h3>{{task.description}}</h3>
     {% endfor %}
+
+
+    {%if tasks%}
+    <h3>task exists</h3>
+    {%endif%}
   </div>
 </div>
 
